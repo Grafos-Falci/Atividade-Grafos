@@ -1,74 +1,59 @@
 package matrizadjacente2;
 
+import java.util.ArrayList;
+
 public class Grafo {
 
-    private int n_vertice;
-    private int[][] aresta = new int[10][10];
-
-    Grafo(int v) {
-        this.n_vertice = v;
-    }
+    private ArrayList<Vertice> lista_vert = new ArrayList<Vertice>();
+    private ArrayList<Aresta> lista_arest = new ArrayList<Aresta>();
 
     public void imprimeMatriz() {
-        System.out.print("\n\n Matriz:");
+        String matrix;
+        matrix = "";
+        for (Vertice linha : lista_vert) {
+            matrix = matrix + linha.getVertice() + " ";
+            for (Vertice coluna : lista_vert) {
 
-        for (int i = 0; i < n_vertice; ++i) {
-            System.out.println();
-            for (int j = 0; j < n_vertice; ++j) {
-                System.out.print(" " + aresta[i][j]);
-            }
-        }
-    }
-
-    public void addAresta(int v1, int v2) {
-        aresta[v2][v1] = 1;
-        aresta[v1][v2] = 1;
-    }
-
-    public void addVertice() {
-        n_vertice++;
-        int i;
-
-        for (i = 0; i < n_vertice; ++i) {
-            aresta[i][n_vertice - 1] = 0;
-            aresta[n_vertice - 1][i] = 0;
-        }
-    }
-
-    public void removeVertice(int x) {
-
-        int i;
-
-        while (x < n_vertice) {
-
-            for (i = 0; i < n_vertice; ++i) {
-                aresta[i][x] = aresta[i][x + 1];
-            }
-
-            for (i = 0; i < n_vertice; ++i) {
-                aresta[x][i] = aresta[x + 1][i];
-            }
-            x++;
-        }
-
-        n_vertice--;
-    }
-
-    public int calculaGrau(int v) {
-        int grau = 0;
-        for (int i = 0; i < n_vertice; i++) {
-                if (aresta[v][i] == 1) {
-                    grau++;
+                if (verificaAresta(coluna, linha)) {
+                    matrix = matrix + "1";
+                } else {
+                    matrix = matrix + "0";
                 }
-                 if (aresta[i][v] == 1) {
-                    grau++;
-                }
-            
+            }
+            matrix = matrix + "\n";
         }
-        return grau;
+        System.out.println(matrix);
     }
 
-    public int calculaOrdem() {
-        return n_vertice;
+    public void addAresta(Aresta a) {
+        lista_arest.add(a);
     }
-}
+
+    public void addVertice(Vertice v) {
+        lista_vert.add(v);
+    }
+
+    public boolean verificaAresta(Vertice v1, Vertice v2) {
+        for (Aresta a : lista_arest) {
+            if ((a.getV1() == v1 && a.getV2() == v2) || (a.getV1() == v2 && a.getV2() == v1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int Ordem() {
+        return lista_vert.size();
+    }
+
+    public int Grau(Vertice v) {
+        int cont=0;
+        for (Aresta a : lista_arest) {
+            if(v == a.getV1() || v== a.getV2()){
+            cont++;
+            }
+        }
+        return cont;
+        }
+    }
+

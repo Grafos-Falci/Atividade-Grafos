@@ -4,33 +4,32 @@ import java.util.Scanner;
 public class Teste_Grafo {
         public static void main(String[] args) 
     { 
-        Grafo grafo = new Grafo(4); 
-        
+        Grafo grafo = new Grafo(); 
         Scanner leitor = new Scanner(System.in);
-        int vertice;
         
-        grafo.addAresta(0, 1); // função que adiciona uma aresta entre dois vértices
-        grafo.addAresta(0, 2); 
-        grafo.addAresta(1, 2); 
-        grafo.addAresta(2, 3); 
-           
-        grafo.imprimeMatriz();  // função que imprime a matriz de um grafo 
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        Vertice v3 = new Vertice("v3");
+        Vertice v4 = new Vertice("v4");
         
-        grafo.addVertice(); // função que adiciona um vértice
-        grafo.addAresta(4, 1);  
-        grafo.addAresta(4, 3); 
-
-          
-        grafo.imprimeMatriz(); 
-
-        grafo.removeVertice(1); // função que remove um vértice da matriz
-    
-        grafo.imprimeMatriz(); 
+        Aresta a1 = new Aresta(v1, v2);
+        Aresta a2 = new Aresta(v2, v3);
+        Aresta a3 = new Aresta(v3, v4);
+        Aresta a4 = new Aresta(v4, v1);
         
-        System.out.println("\n\nOrdem do grafo: "+grafo.calculaOrdem());
-        System.out.println("\nColoque o numero do vertice: "); // v1 = 0; v2=1; v3=2; v4=3
-        vertice = leitor.nextInt(); 
-        System.out.println("Grau do vertice v"+(vertice+1)+" = "+grafo.calculaGrau(vertice));
+        grafo.addAresta(a1);
+        grafo.addAresta(a2);
+        grafo.addAresta(a3);
+        grafo.addAresta(a4);
         
+        grafo.addVertice(v1);
+        grafo.addVertice(v2);
+        grafo.addVertice(v3);
+        grafo.addVertice(v4);
+   
+        grafo.imprimeMatriz();
+        
+        System.out.println(grafo.Ordem());
+        System.out.println(grafo.Grau(v4));
     } 
 }
